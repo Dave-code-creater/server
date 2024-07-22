@@ -26,6 +26,9 @@ app.use(cors({
 app.use("/api/auth", AuthRouter);
 app.use("/api/user", UserRouter);
 app.use("/api/task", TaskRouter);
+app.use("/", (req, res) => {
+    res.send('Hello from the API');
+});
 
 // 404 Handler (must be after all routes)
 app.use(async (req, res, next) => {
