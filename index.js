@@ -16,12 +16,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors({
-    origin: 'https://www.danhsachcongviec.site/', // Adjust if necessary for production
+    origin: 'https://todo-front-mbb8y15n7-dave-code-creaters-projects.vercel.app',
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     preflightContinue: false,
 }));
+
 // Routes
 app.use("/api/auth", AuthRouter);
 app.use("/api/user", UserRouter);
