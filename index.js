@@ -21,6 +21,8 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     preflightContinue: false,
+    accessControlAllowCredentials: true,
+    
 }));
 
 // Routes
