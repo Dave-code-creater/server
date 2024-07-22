@@ -15,12 +15,16 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-  });
-  
+app.use(cors({
+    origin: 'https://www.danhsachcongviec.site',
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    preflightContinue: false,
+    accessControlAllowCredentials: true,
+
+}));
+
 // Routes
 app.use("/api/auth", AuthRouter);
 app.use("/api/user", UserRouter);
