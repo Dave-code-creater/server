@@ -16,10 +16,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors({
-    origin: '*', // Adjust if necessary for production
-    credentials: true
+    origin: 'https://www.danhsachcongviec.site/', // Adjust if necessary for production
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    preflightContinue: false,
 }));
-
 // Routes
 app.use("/api/auth", AuthRouter);
 app.use("/api/user", UserRouter);

@@ -34,7 +34,7 @@ router.get('/:id/type', authentication, getTaskByTypeByUserID);
 
 
 // Test route to check if the service is running
-router.get("/test", (req, res) => {
+router.get("/", (req, res) => {
 	res.send("Hello World from task service");
 });
 
