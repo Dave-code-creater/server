@@ -25,6 +25,8 @@ async function createTaskByUserID(req, res, next) {
 			user: userId,
 		});
 		const result = await task.save();
+		console.log(result);
+		console.log(task);
 		res.send(result);
 	} catch (err) {
 		next(err);
