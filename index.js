@@ -15,42 +15,43 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cors({
-    origin: process.env.LOCAL_URL || 'https://www.danhsachcongviec.site',
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization', "Bearer"],
-    preflightContinue: false,
-    accessControlAllowCredentials: true,
-
-}));
+app.use(
+	cors({
+		origin: process.env.LOCAL_URL || 'https://www.danhsachcongviec.site',
+		credentials: true,
+		methods: ['GET', 'POST', 'PUT', 'DELETE'],
+		allowedHeaders: ['Content-Type', 'Authorization', 'Bearer'],
+		preflightContinue: false,
+		accessControlAllowCredentials: true,
+	})
+);
 
 // Routes
-app.use("/api/auth", AuthRouter);
-app.use("/api/user", UserRouter);
-app.use("/api/task", TaskRouter);
-app.use("/", (req, res) => {
-    res.send('Hello from the API');
+app.use('/api/auth', AuthRouter);
+app.use('/api/user', UserRouter);
+app.use('/api/task', TaskRouter);
+app.use('/', (req, res) => {
+	res.send('Hello from the API');
 });
 
 // 404 Handler (must be after all routes)
 app.use(async (req, res, next) => {
-    next(createError(404, 'This route does not exist'));
+	next(createError(404, 'This route does not exist'));
 });
 
 // Error Handling Middleware (must be after 404 handler)
 app.use((err, req, res, next) => {
-    res.status(err.status || 500);
-    res.send({
-        error: {
-            status: err.status || 500,
-            message: err.message,
-        },
-    });
+	res.status(err.status || 500);
+	res.send({
+		error: {
+			status: err.status || 500,
+			message: err.message,
+		},
+	});
 });
 
 const PORT = process.env.PORT || 6000;
 
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+	console.log(`Server running on port ${PORT}`);
 });

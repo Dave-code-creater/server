@@ -1,28 +1,26 @@
-const User = require("../Models/User");
-const { signAccessToken, signRefreshToken } = require("../Security/JWT");
-const jwt = require("jsonwebtoken");
+const User = require('../Models/User');
+const { signAccessToken, signRefreshToken } = require('../Security/JWT');
+const jwt = require('jsonwebtoken');
 const {
 	registerValidation,
 	loginValidation,
-} = require("../Utility/Validation");
+} = require('../Utility/Validation');
 
-const createError = require("http-errors");
-const dotenv = require("dotenv");
+const createError = require('http-errors');
+const dotenv = require('dotenv');
 
 dotenv.config();
 
 async function login(req, res, next) {
 	try {
 		const { email, password } = req.body;
-		console.log(email, password);
 		const { error } = loginValidation(req.body);
 		if (error) throw createError.BadRequest(error);
-
 		const user = await User.findOne({ email });
-		if (!user) throw createError.NotFound("User not registered");
+		if (!user) throw createError.NotFound('User not registered');
 		const isMatch = await user.isValidPassword(password);
 		if (!isMatch)
-			throw createError.Unauthorized("Invalid username/password");
+			throw createError.Unauthorized('Invalid username/password');
 
 		const accessToken = await signAccessToken(
 			user._id,
@@ -44,7 +42,11 @@ async function login(req, res, next) {
 		res.send({ accessToken, refreshToken });
 	} catch (err) {
 		if (err.isJoi === true)
-			return next(createError.BadRequest("Invalid username/password"));
+			return next(createError.BadRequest('Invalid username/password'));
+		else {
+			if (err.status === 404)
+				return next(createError.NotFound('User not registered'));
+		}
 		next(err);
 	}
 }
@@ -74,10 +76,10 @@ async function register(req, res, next) {
 
 		if (error) throw createError.BadRequest(error.details[0].message);
 		const existEmail = await User.findOne({ email });
-		if (existEmail) throw createError.Conflict("Email already exists");
+		if (existEmail) throw createError.Conflict('Email already exists');
 		const existUsername = await User.findOne({ username });
 		if (existUsername)
-			throw createError.Conflict("Username already exists");
+			throw createError.Conflict('Username already exists');
 
 		const user = new User({ username, email, password });
 		const savedUser = await user.save();
@@ -106,7 +108,7 @@ async function register(req, res, next) {
 
 async function verify(req, res, next) {
 	try {
-		const token = req.headers.authorization.split(" ")[1];
+		const token = req.headers.authorization.split(' ')[1];
 		if (!token) throw createError.BadRequest();
 		jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (err, payload) => {
 			if (err) throw createError.Unauthorized();
