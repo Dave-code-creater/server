@@ -15,7 +15,7 @@ async function login(req, res, next) {
 	try {
 		const { email, password } = req.body;
 		const { error } = loginValidation(req.body);
-		if (error) throw createError.BadRequest(error);
+		if (error) throw createError.LengthRequired(error.details[0].message);
 		const user = await User.findOne({ email });
 		if (!user) throw createError.NotFound('User not registered');
 		const isMatch = await user.isValidPassword(password);

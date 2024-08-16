@@ -12,6 +12,7 @@ const {
 	getTaskByStatusByUserID,
 	getTaskByTypeByUserID,
 	updateTaskByTaskID,
+	updateTaskStatusByTaskID,
 } = require("../Services/TaskService");
 
 // Route to get all tasks by user ID
@@ -22,6 +23,9 @@ router.post('/:id', authentication, createTaskByUserID);
 
 // Route to update a task by task ID
 router.put('/:taskId', authentication, updateTaskByTaskID);
+
+// Route to update task status by task ID
+router.put('/:taskId/status', authentication, updateTaskStatusByTaskID);
 
 // Route to delete a task by task ID
 router.delete('/:taskId', authentication, deleteTask);

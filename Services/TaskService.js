@@ -25,8 +25,7 @@ async function createTaskByUserID(req, res, next) {
 			user: userId,
 		});
 		const result = await task.save();
-		console.log(result);
-		console.log(task);
+		
 		res.send(result);
 	} catch (err) {
 		next(err);
@@ -67,6 +66,20 @@ async function getTaskByStatusByUserID(req, res, next) {
 	}
 }
 
+async function updateTaskStatusByTaskID(req, res, next) {
+	try {
+		const { taskId } = req.params;
+		const task = await Task.findByIdAndUpdate(taskId, req.body, {
+			new: true,
+		}).exec();
+		if (!task) throw createError.NotFound();
+		res.send(task);
+	}
+	catch (err) {
+		next(err);
+	}
+}
+
 async function getTaskByTypeByUserID(req, res, next) {
 	try {
 		const { type } = req.query;
@@ -100,4 +113,5 @@ module.exports = {
 	getTaskByStatusByUserID,
 	getTaskByTypeByUserID,
 	updateTaskByTaskID,
+	updateTaskStatusByTaskID,
 };

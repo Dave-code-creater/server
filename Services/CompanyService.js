@@ -16,9 +16,7 @@ async function createCompany(req, res, next) {
 async function getCompanyById(req, res, next) {
 	try {
 		const { id } = req.params;
-		console.log(id);
 		const company = await Company.findById(id).exec();
-		console.log(company);
 		if (!company) throw createError(404, 'Company not found'); // 404 Not Found
 		res.status(200).send(company); // 200 OK
 	} catch (err) {
