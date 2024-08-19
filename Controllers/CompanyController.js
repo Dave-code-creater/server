@@ -4,14 +4,19 @@ const { authentication } = require('../Middleware/Authentication');
 const { authorization } = require('../Middleware/Authorization');
 const {
 	createCompany,
-	getCompanyById,
+	getCompanyThatUserIDWorking,
 	updateCompany,
 	getAllCompanies,
+	addEmployee,
 	deleteCompany,
+	getAllEmployeesWorkingInCompany,
 } = require('../Services/CompanyService');
 
-router.post('/create', createCompany);
-router.get('/:id', authorization, getCompanyById);
-router.put('/:id', authorization, updateCompany);
-router.get('/', authorization, getAllCompanies);
-router.delete('/:id', authorization, deleteCompany);
+router.post('/',authentication, createCompany);
+router.get('/:id', authentication, getCompanyThatUserIDWorking);
+router.get('/:companyUUID/employees', authentication, getAllEmployeesWorkingInCompany);
+router.post('/employees', authentication, addEmployee);
+router.put('/', authentication, updateCompany);
+router.delete('/', authentication, deleteCompany);
+
+module.exports = router;

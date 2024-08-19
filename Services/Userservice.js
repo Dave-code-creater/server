@@ -15,6 +15,7 @@ async function createUser(req, res, next) {
 
 async function getUserById(req, res, next) {
 	try {
+		console.log(req.params);
 		const { id } = req.params;
 		console.log(id);
 		const user = await User.findById(id).select('-password').exec();

@@ -6,12 +6,32 @@ const companySchema = new mongoose.Schema({
 		required: true,
 		trim: true,
 	},
-	address: {
+	about: {
 		type: String,
 		required: true,
 		trim: true,
 	},
-	contact: {
+	country: {
+		type: String,
+		required: true,
+		trim: true,
+	},
+	city: {
+		type: String,
+		required: true,
+		trim: true,
+	},
+	region: {
+		type: String,
+		required: true,
+		trim: true,
+	},
+	postalCode: {
+		type: String,
+		required: false,
+		trim: true,
+	},
+	address: {
 		type: String,
 		required: true,
 		trim: true,
@@ -45,6 +65,15 @@ const companySchema = new mongoose.Schema({
 		ref: 'user',
 		required: true,
 	},
+	companyUUID: {
+		type: String,
+		required: true,
+		unique: true,
+		default: function() {
+			return uuidv4();
+		}
+	},
+	
 });
 
 const Company = mongoose.model('Company', companySchema);

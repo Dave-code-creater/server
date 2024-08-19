@@ -6,7 +6,7 @@ const createError = require('http-errors');
 const AuthRouter = require('./Controllers/AuthController');
 const UserRouter = require('./Controllers/UserController');
 const TaskRouter = require('./Controllers/TaskController');
-
+const CompanyRouter = require('./Controllers/CompanyController');
 const app = express();
 dotenv.config();
 
@@ -21,8 +21,10 @@ app.use(
 		credentials: true,
 		methods: ['GET', 'POST', 'PUT', 'DELETE'],
 		allowedHeaders: ['Content-Type', 'Authorization', 'Bearer'],
-		preflightContinue: false,
+		preflightContinue: true,
 		accessControlAllowCredentials: true,
+		optionsSuccessStatus: 204,
+		maxAge: 86400,
 	})
 );
 
@@ -30,6 +32,7 @@ app.use(
 app.use('/api/auth', AuthRouter);
 app.use('/api/user', UserRouter);
 app.use('/api/task', TaskRouter);
+app.use('/api/group', CompanyRouter);
 app.use('/', (req, res) => {
 	res.send('Hello from the API');
 });

@@ -11,20 +11,20 @@ const {
 	deleteUser,
 } = require("../Services/Userservice");
 
-// Route to get all users
-router.get("/users", authentication, authorization, getAllUsers);
+// // Route to get all users
+// router.get("/users", authentication, authorization, getAllUsers);
 
 // Route to get a user by their ID
-router.get("/users/:id", authentication, getUserById);
+router.get("/:id", authentication, getUserById);
 
 // Route to create a new user
 router.post("/users", authentication, authorization, createUser);
 
-// Route to update a user
-router.put("/users/:id", authentication, updateUser);
+// // Route to update a user
+// router.put("/:id", authentication, updateUser);
 
 // Route to delete a user
-router.delete("/users/:id", authentication, deleteUser);
+router.delete("/:id", authentication, deleteUser);
 
 // Test route
 router.get("/", (req, res) => {

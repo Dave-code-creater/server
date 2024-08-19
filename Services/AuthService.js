@@ -39,7 +39,7 @@ async function login(req, res, next) {
 			user.updatedAt
 		);
 
-		res.send({ accessToken, refreshToken });
+		res.send({ accessToken, refreshToken }).status(200);
 	} catch (err) {
 		if (err.isJoi === true)
 			return next(createError.BadRequest('Invalid username/password'));

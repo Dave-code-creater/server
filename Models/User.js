@@ -1,7 +1,12 @@
 const mongoose = require("../Database/Config");
 const bcrypt = require('bcrypt');
 
+
 const userSchema = new mongoose.Schema({
+	img: {
+		type: String,
+		default:'https://img.icons8.com/?size=100&id=7820&format=png&color=000000',
+	},
 	username: {
 		type: String,
 		required: true,
@@ -18,11 +23,9 @@ const userSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	role: {
+	position: {
 		type: String,
-		enum: ['user', 'admin', 'employee'],
 		default: 'user',
-		required: true,
 	},
 	createdAt: {
 		type: Date,
