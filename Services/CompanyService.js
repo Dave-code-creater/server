@@ -27,6 +27,7 @@ async function createCompany(req, res, next) {
 			
 		);
 		const result = await company.save();
+		console.log(result);
 		res.status(201).send(result.companyUUID); // 201 Created
 	} catch (err) {
 		console.log(err);

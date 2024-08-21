@@ -1,4 +1,5 @@
 const mongoose = require('../Database/Config');
+const { v4: uuidv4 } = require('uuid');
 
 const companySchema = new mongoose.Schema({
 	name: {
@@ -50,7 +51,7 @@ const companySchema = new mongoose.Schema({
 		default: Date.now,
 	},
 	employees: {
-		type: Array,
+		type: [mongoose.Schema.Types.ObjectId],
 		required: false,
 		default: [],
 	},
